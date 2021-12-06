@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import tech.pragmat.springsec.model.MyUser;
 
 @Repository
-public interface UserRepository extends CrudRepository<MyUser,Integer> {
+public interface UserRepository extends CrudRepository<MyUser, Integer> {
+
     MyUser findFirstByName(String name);
 }

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Data
 public class MyRole {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

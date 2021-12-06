@@ -1,13 +1,7 @@
 package tech.pragmat.springsec.web.controller;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import tech.pragmat.springsec.model.MyRole;
-import tech.pragmat.springsec.model.MyUser;
-import tech.pragmat.springsec.service.UserService;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 //@RequestMapping("/api")

@@ -1,8 +1,12 @@
 package tech.pragmat.springsec.config.Jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,7 +21,7 @@ public class JwtProvider {
     @Value("${jwt}")
     private String JwtSecret;
 
-    public  String generateToken(String login){
+    public String generateToken(String login) {
         Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .setSubject(login)
@@ -25,13 +29,20 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS512, JwtSecret)
                 .compact();
     }
-
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(JwtSecret).parseClaimsJws(token);
             return true;
+        } catch (ExpiredJwtException expEx) {
+            log.error("Token expired");
+        } catch (UnsupportedJwtException unsEx) {
+            log.error("Unsupported jwt");
+        } catch (MalformedJwtException mjEx) {
+            log.error("Malformed jwt");
+        } catch (SignatureException sEx) {
+            log.error("Invalid signature");
         } catch (Exception e) {
-            log.info("invalid token");
+            log.error("invalid token");
         }
         return false;
     }

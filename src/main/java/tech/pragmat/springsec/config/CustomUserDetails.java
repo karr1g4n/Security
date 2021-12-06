@@ -21,11 +21,12 @@ public class CustomUserDetails implements UserDetails {
 
         customUserDetails.login=user.getName();
         customUserDetails.password=user.getPassword();
-        customUserDetails.grantedAuthorities= Collections.singletonList(new SimpleGrantedAuthority(user.getRol()));
+        customUserDetails.grantedAuthorities= Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
         return customUserDetails;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println(grantedAuthorities);
         return grantedAuthorities;
     }
 
